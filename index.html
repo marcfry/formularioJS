@@ -29,19 +29,19 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Email</label>
-                        <input type="email" class="form-control" placeholder="juanperez@gmail.com" id="email">
+                        <input type="email" class="form-control" placeholder="juanperez@gmail.com" id="email" onblur="validarEmail(this)">
   <div class="valid-feedback"></div>       
   <div class="invalid-feedback">Debe ingresar un mail valido</div>               
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Teléfono</label>
-                        <input type="number" class="form-control" placeholder="381123123" id="telefono" onblur="campoRequerido(this)">
+                        <input type="number" class="form-control" placeholder="381123123" id="telefono" onblur="validarNumeros(this)">
     <div class="invalid-feedback">Debe ingresar un numero válido</div>               
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Consulta</label>
-                        <textarea id="consulta" rows="4" placeholder="Ingrese su consulta" class="form-control"></textarea>
-                        <div class="invalid-feedback">
+                        <textarea id="consulta" rows="4" placeholder="Ingrese su consulta" class="form-control" onblur="validarConsulta(this)"></textarea>
+                                                <div class="invalid-feedback">
                             Debe ingresar una consulta de almenos 10 caracteres
                         </div>
                     </div>
