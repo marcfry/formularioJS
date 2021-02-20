@@ -46,30 +46,64 @@ function validarConsulta(texto) {
 }
 
 function contadorCaracteres(i) {
-  console.log(i.value);
-  document.getElementById("numeroCaracteres").innerHTML =
+    document.getElementById("numeroCaracteres").innerHTML =
     i.value.length + " carácteres";
 }
 
 let checkTerminos = document.querySelector("#terminos");
 //addEventListener agregar un evento a la variable entre parentesis nombre del evento y la funcion
-checkTerminos.addEventListener("change", function (){
-  console.log("desde la funcion del checkbox")
-  if (checkTerminos.checked){
+checkTerminos.addEventListener("change", function () {
+  validarTerminos();
+});
+function validarTerminos() {
+  console.log("desde la funcion del checkbox");
+  if (checkTerminos.checked) {
     checkTerminos.className = "form-check-input is-valid";
     return true;
   } else {
     checkTerminos.className = "form-check-input is-invalid";
     return false;
   }
-})
+}
 
-function validarGeneral(event){
+function validarGeneral(event) {
   event.preventDefault();
   console.log("desde la funcion validarGeneral");
-  if(campoRequerido(document.getElementById("nombre"))== true && validarEmail(document.getElementById("email"))== true && validarNumeros(document.getElementById("telefono")) && validarConsulta(document.getElementById("consulta"))){
-alert ("los datos estan bien cargados");
+  if (
+    campoRequerido(document.getElementById("nombre")) == true &&
+    validarEmail(document.getElementById("email")) == true &&
+    validarNumeros(document.getElementById("telefono")) &&
+    validarConsulta(document.getElementById("consulta")) &&
+    validarTerminos()
+  ) {
+    //aqui debo enviar el mail
+
+    enviarEmail();
   } else {
-    alert ("los datos estan mal cargados")
+    //indicar error
+    alert("debe corregir los datos cargados");
   }
+}
+
+function enviarEmail() {
+  emailjs
+    .send("service_zrczdis", "template_upouiwm", {
+      from_name: document.getElementById('nombre').value,
+      to_name: "Administrador",
+      message: `Email: ${document.getElementById('email').value} - Telefono: ${document.getElementById('telefono').value}
+      - Consulta: ${document.getElementById('consulta').value}`
+    })
+    .then(
+      function (response) {
+        // esta funcion se ejecuta cuando se cumple la promesa
+        console.log(response);
+        alert("los datos fueron enviados");
+        document.getElementById("formSuscripcion").reset();
+      },
+      function (error) {
+        // esta funcion se ejecuta cuando dio error la promesa
+        console.log(error);
+        alert("No se puedo enviar el mail");
+      }
+    );
 }
